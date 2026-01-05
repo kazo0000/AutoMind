@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Отчёт — {{ report.car.brand }} {{ report.car.model }}{% endblock %}
+{% block content %}
+  <h2>{{ report.car.brand }} {{ report.car.model }} — подробный отчёт</h2>
+  <ul class="list-unstyled">
+    <li><strong>Год:</strong> {{ report.car.year }}</li>
+    <li><strong>Категория:</strong> {{ report.car.category }}</li>
+    <li><strong>Тип топлива:</strong> {{ report.car.fuel_type }}</li>
+    <li><strong>Объём двигателя:</strong> {{ report.car.engine_size }}&nbsp;л</li>
+    <li><strong>Мощность:</strong> {{ report.car.power }}&nbsp;л.с.</li>
+    <li><strong>Надёжность:</strong> {{ report.car.reliability_score }}</li>
+    <li><strong>Цена:</strong> ${{ report.car.price }}</li>
+  </ul>
+  <h4>Преимущества</h4>
+  <ul>
+    {% for pro in report.car.pros.split(';') %}
+      <li>{{ pro }}</li>
+    {% endfor %}
+  </ul>
+  <h4>Недостатки</h4>
+  <ul>
+    {% for con in report.car.cons.split(';') %}
+      <li>{{ con }}</li>
+    {% endfor %}
+  </ul>
+  <h4>Прогноз ежегодных затрат</h4>
+  <p>${{ '%.2f'|format(report.predicted_annual_cost) }}</p>
+  <h4>Ссылки на объективные обзоры</h4>
+  <ul>
+    {% for link in report.youtube_reviews %}
+      <li><a href="{{ link }}" target="_blank" rel="noopener">YouTube</a></li>
+    {% endfor %}
+    {% for link in report.drom_reviews %}
+      <li><a href="{{ link }}" target="_blank" rel="noopener">Drom</a></li>
+    {% endfor %}
+    {% for link in report.otzovik_reviews %}
+      <li><a href="{{ link }}" target="_blank" rel="noopener">Отзовик</a></li>
+    {% endfor %}
+  </ul>
+  <p><strong>Полная версия отчёта</strong> (история поломок, прогноз остаточной стоимости и др.) доступна в подписке.</p>
+  <a href="/" class="btn btn-link">Назад к поиску</a>
+{% endblock %}

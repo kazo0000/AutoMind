@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Результаты — AutoMind{% endblock %}
+{% block content %}
+  <h2>Результаты подбора</h2>
+  {% if shortlist %}
+    <table class="table table-striped align-middle">
+      <thead>
+        <tr>
+          <th scope="col">Модель</th>
+          <th scope="col">Год</th>
+          <th scope="col">Категория</th>
+          <th scope="col">Надёжность</th>
+          <th scope="col">Цена ($)</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for car in shortlist %}
+        <tr>
+          <td>{{ car.brand }} {{ car.model }}</td>
+          <td>{{ car.year }}</td>
+          <td>{{ car.category }}</td>
+          <td>{{ car.reliability_score }}</td>
+          <td>{{ car.price }}</td>
+          <td>
+            <a href="{{ url_for('report', car_id=car.id) }}" class="btn btn-sm btn-secondary">
+              Подробнее
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <p>
+      Хотите полный отчёт? <strong>Расширенный анализ доступен по подписке.</strong>
+    </p>
+  {% else %}
+    <p>Ничего не найдено. Попробуйте изменить параметры.</p>
+  {% endif %}
+  <a href="/" class="btn btn-link">Новый поиск</a>
+{% endblock %}
